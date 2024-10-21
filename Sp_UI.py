@@ -119,7 +119,7 @@ current_min=0
 from_date, to_date = adjust_trading_dates()
 print(from_date,to_date)
 # user_data=pd.read_csv('user_credentials.csv')
-users = read_user_credentials(user_data)
+# users = read_user_credentials(user_data)
     
 header = {
 "Authorization": f'enctoken {users[0]["enc"]}',  # Replace with your actual enctoken
