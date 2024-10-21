@@ -112,18 +112,19 @@ if uploaded_file is not None:
     if uploaded_file.name.endswith('.csv'):
         user_data = pd.read_csv(uploaded_file)
         st.write("CSV file uploaded successfully!")
-        users = read_user_credentials(user_data)
+        
     elif uploaded_file.name.endswith('.xlsx'):
         user_data = pd.read_excel(uploaded_file)
         st.write("Excel file uploaded successfully!")
-        users = read_user_credentials(user_data)
+        # users = read_user_credentials(user_data)
     else:
         st.error("Unsupported file format! Only accepted 'csv' or 'xslsx'")
 else:
     st.info("Please upload a user credential file to proceed")
 
 
-if 'users' in globals():    
+if 'user_data' in globals():    
+    users = read_user_credentials(user_data)
     header = {
     "Authorization": f'enctoken {users[0]["enc"]}',  # Replace with your actual enctoken
     "Content-Type": "application/json"}
