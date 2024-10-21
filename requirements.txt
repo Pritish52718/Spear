@@ -1,5 +1,5 @@
 pyotp
-aiohttp
+aiohttp==3.10.10
 asyncio
 nest_asyncio
 pandas-ta
