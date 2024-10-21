@@ -27,19 +27,7 @@ col1,col2,col3=st.columns([4,2,2])
 # Step 1: Upload a file
 uploaded_file = col1.file_uploader("Upload the user credential file. (csv or xlsx)", type=["csv", "xlsx"])
 
-if uploaded_file is not None:
-    if uploaded_file.name.endswith('.csv'):
-        user_data = pd.read_csv(uploaded_file)
-        users = read_user_credentials(user_data)
-        st.write("CSV file uploaded successfully!")
-    elif uploaded_file.name.endswith('.xlsx'):
-        user_data = pd.read_excel(uploaded_file)
-        users = read_user_credentials(user_data)
-        st.write("Excel file uploaded successfully!")
-    else:
-        st.error("Unsupported file format! Only accepted 'csv' or 'xslsx'")
-else:
-    st.info("Please upload a user credential file to proceed")
+
     
 
 BOT_TOKEN=col2.text_input("Telegram Details (optional)","Telegram Bot Token")
@@ -119,21 +107,40 @@ current_min=0
 from_date, to_date = adjust_trading_dates()
 print(from_date,to_date)
 # user_data=pd.read_csv('user_credentials.csv')
-# users = read_user_credentials(user_data)
-    
-header = {
-"Authorization": f'enctoken {users[0]["enc"]}',  # Replace with your actual enctoken
-"Content-Type": "application/json"}
 
-angel_nfo_data = __import__('Angel_data_nfo')
-nfo_df=angel_nfo_data.nfo_test.reset_index(drop=True)
-nfo_df['symbolToken']=nfo_df.symbolToken.astype('int')
+if uploaded_file is not None:
+    if uploaded_file.name.endswith('.csv'):
+        user_data = pd.read_csv(uploaded_file)
+        st.write("CSV file uploaded successfully!")
+        users = read_user_credentials(user_data)
+    elif uploaded_file.name.endswith('.xlsx'):
+        user_data = pd.read_excel(uploaded_file)
+        st.write("Excel file uploaded successfully!")
+        users = read_user_credentials(user_data)
+    else:
+        st.error("Unsupported file format! Only accepted 'csv' or 'xslsx'")
+else:
+    st.info("Please upload a user credential file to proceed")
 
-df_proc=get_tokens(header,nfo_df)#.head(100)
+
+if 'users' in globals():    
+    header = {
+    "Authorization": f'enctoken {users[0]["enc"]}',  # Replace with your actual enctoken
+    "Content-Type": "application/json"}
+
+    angel_nfo_data = __import__('Angel_data_nfo')
+    nfo_df=angel_nfo_data.nfo_test.reset_index(drop=True)
+    nfo_df['symbolToken']=nfo_df.symbolToken.astype('int')
+
+    df_proc=get_tokens(header,nfo_df)#.head(100)
 results=[]
 
 
-while st.session_state.run:     
+while st.session_state.run:
+    if uploaded_file is None:
+        st.error("Credential file not uploaded. Please upload a user credential file to proceed")
+        st.session_state.run = False
+        break;
     weekday,before_market,after_market,within_time=is_weekday_and_within_time()
     
     if weekday&within_time:
