@@ -131,10 +131,7 @@ if 'users' in globals():
     angel_nfo_data = __import__('Angel_data_nfo')
     nfo_df=angel_nfo_data.nfo_test.reset_index(drop=True)
     nfo_df['symbolToken']=nfo_df.symbolToken.astype('int')
-    print('###############################')
-    print(header)
-    print(nfo_df.head())
-    print('###############################')
+    
     df_proc=get_tokens(header,nfo_df)#.head(100)
 results=[]
 
