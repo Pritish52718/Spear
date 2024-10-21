@@ -60,7 +60,7 @@ def login_with_credentials(userid, password, twofa):
 
 def get_tokens(header,angel_nfo_data):
     session=requests.session()
-    resp=session.get("https://api.kite.trade/instruments",headers=header)
+    resp=session.get("https://api.kite.trade/instruments",headers=header, verify=False)
     csv_data = StringIO(resp.text)
     df = pd.read_csv(csv_data)
     print('*******************')
