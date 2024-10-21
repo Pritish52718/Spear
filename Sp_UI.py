@@ -30,9 +30,11 @@ uploaded_file = col1.file_uploader("Upload the user credential file. (csv or xls
 if uploaded_file is not None:
     if uploaded_file.name.endswith('.csv'):
         user_data = pd.read_csv(uploaded_file)
+        users = read_user_credentials(user_data)
         st.write("CSV file uploaded successfully!")
     elif uploaded_file.name.endswith('.xlsx'):
         user_data = pd.read_excel(uploaded_file)
+        users = read_user_credentials(user_data)
         st.write("Excel file uploaded successfully!")
     else:
         st.error("Unsupported file format! Only accepted 'csv' or 'xslsx'")
