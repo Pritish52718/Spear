@@ -63,6 +63,10 @@ def get_tokens(header,angel_nfo_data):
     resp=session.get("https://api.kite.trade/instruments",headers=header)
     csv_data = StringIO(resp.text)
     df = pd.read_csv(csv_data)
+    print('*******************')
+    print(df.head())
+    print('*******************')
+    print(df.columns)
     df_nfo=df[df.segment=='NFO-OPT'].reset_index(drop=True)
 
     df_nfo=df_nfo[(~df_nfo.name.isin(['BANKNIFTY', 'FINNIFTY', 'MIDCPNIFTY', 'NIFTY', 'NIFTYNXT50']))]
