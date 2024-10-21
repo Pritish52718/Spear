@@ -11,7 +11,7 @@ import pyotp
 import requests
 import numpy as np
 import pandas as pd
-import xlwings as xw
+# import xlwings as xw
 
 from threading import Thread
 from datetime import datetime,timedelta
