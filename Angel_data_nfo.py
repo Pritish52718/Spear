@@ -93,7 +93,7 @@ def data_process(chunks,exch):
     total_data = len(chunks)  # Total number of chunks
     completed_data = 0        # Counter to track completion
 
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(max_workers=5) as executor:
         futures = {executor.submit(fetch_data, chunk,exch): chunk for chunk in chunks}
 
         # As tasks complete, collect the results and update the counter
