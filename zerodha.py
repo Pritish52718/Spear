@@ -17,7 +17,7 @@ import nest_asyncio
 
 import numpy as np
 import pandas as pd
-import xlwings as xw
+# import xlwings as xw
 import pandas_ta as ta
 
 from io import StringIO
